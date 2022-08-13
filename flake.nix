@@ -15,6 +15,7 @@
         modules = [
           nixos-hardware.nixosModules.raspberry-pi-4
           ./configuration.nix
+          ./base.nix
         ];
       };
     };
