@@ -10,4 +10,11 @@
     kernelModules = lib.mkForce [ "bridge" "macvlan" "tap" "tun" "loop" "atkbd" "ctr" ];
     supportedFilesystems = lib.mkForce [ "btrfs" "reiserfs" "vfat" "f2fs" "xfs" "ntfs" "cifs" "ext4" "vfat" ];
   };
+  # "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix" usually
+  # contains this, it's the one thing from the installer image that we
+  # actually need.
+  fileSystems."/" =
+    { device = "/dev/disk/by-label/NIXOS_SD";
+      fsType = "ext4";
+    };
 }
