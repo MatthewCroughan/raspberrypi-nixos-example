@@ -10,4 +10,5 @@
       fsType = "ext4";
     };
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  nix.settings.experimental-features = lib.mkDefault "nix-command flakes";
 }
