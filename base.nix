@@ -9,6 +9,6 @@
     { device = "/dev/disk/by-label/NIXOS_SD";
       fsType = "ext4";
     };
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
   nix.settings.experimental-features = lib.mkDefault "nix-command flakes";
 }
