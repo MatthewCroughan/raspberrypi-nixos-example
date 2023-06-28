@@ -4,19 +4,25 @@
   services.openssh.enable = true;
   networking.hostName = "pi";
   users = {
-    users.myUsername = {
-      password = "myPassword";
+    users.default = {
+      password = "default";
       isNormalUser = true;
       extraGroups = [ "wheel" ];
     };
   };
   networking = {
-    interfaces."wlan0".useDHCP = true;
+    interfaces.wlan0 = {
+      useDHCP = false;
+      ipv4.addresses = [ {
+        address = "192.168.8.207";
+        prefixLength = 24;
+      } ];
+    };
     wireless = {
       interfaces = [ "wlan0" ];
       enable = true;
       networks = {
-        networkSSID.psk = "password";
+        HLS.psk = "tapeheads";
       };
     };
   };
