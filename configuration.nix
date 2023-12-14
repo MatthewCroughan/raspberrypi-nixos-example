@@ -1,11 +1,15 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, lib, ... }:
 {
+  imports = [
+    ./repart.nix
+  ];
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
   environment.systemPackages = with pkgs; [ vim git ];
   services.openssh.enable = true;
   networking.hostName = "pi";
   users = {
-    users.myUsername = {
-      password = "myPassword";
+    users.default = {
+      password = "default";
       isNormalUser = true;
       extraGroups = [ "wheel" ];
     };
@@ -19,5 +23,9 @@
         networkSSID.psk = "password";
       };
     };
+  };
+  nix.settings = {
+    experimental-features = lib.mkDefault "nix-command flakes";
+    trusted-users = [ "root" "@wheel" ];
   };
 }

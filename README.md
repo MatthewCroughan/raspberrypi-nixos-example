@@ -9,7 +9,7 @@ NixOS configuration.
 }
 ```
 
-Then you will be able to run `nix build .#images.pi` and get a result you can
+Then you will be able to run `nix build .#images.pi4` and get a result you can
 flash to an SD Card and boot.
 
 After you've booted, you will be able to rebuild the nixosConfiguration on the
