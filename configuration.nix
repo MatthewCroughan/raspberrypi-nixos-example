@@ -1,8 +1,5 @@
 { pkgs, lib, ... }:
 {
-  imports = [
-    ./repart.nix
-  ];
   boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
   environment.systemPackages = with pkgs; [ vim git ];
   services.openssh.enable = true;

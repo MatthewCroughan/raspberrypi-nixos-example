@@ -1,0 +1,43 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Will Fancher <elvishjerricco@gmail.com>
+Date: Sat, 25 Jan 2025 04:26:15 -0500
+Subject: [PATCH] repart: Support named GPT flags in libfdisk
+
+---
+ src/repart/repart.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
+
+diff --git a/src/repart/repart.c b/src/repart/repart.c
+index 2ddff313fc..e677869b71 100644
+--- a/src/repart/repart.c
++++ b/src/repart/repart.c
+@@ -6269,9 +6269,26 @@ static int set_gpt_flags(struct fdisk_partition *q, uint64_t flags) {
+                 if (!FLAGS_SET(flags, bit))
+                         continue;
+ 
+-                xsprintf(buf, "%u", i);
+-                if (!strextend_with_separator(&a, ",", buf))
+-                        return -ENOMEM;
++                switch (i) {
++                case 0:
++                        if (!strextend_with_separator(&a, ",", "RequiredPartition"))
++                                return -ENOMEM;
++                        break;
++                case 1:
++                        if (!strextend_with_separator(&a, ",", "NoBlockIOProtocol"))
++                                return -ENOMEM;
++                        break;
++                case 2:
++                        if (!strextend_with_separator(&a, ",", "LegacyBIOSBootable"))
++                                return -ENOMEM;
++                        break;
++                default:
++                        if (i > 2 && i < 48)
++                                log_warning("GPT flag '%u' is reserved by the UEFI specification. libfdisk will ignore it.", i);
++                        xsprintf(buf, "%u", i);
++                        if (!strextend_with_separator(&a, ",", buf))
++                                return -ENOMEM;
++                }
+         }
+ 
+         return fdisk_partition_set_attrs(q, a);
