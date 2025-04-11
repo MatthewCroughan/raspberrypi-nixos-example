@@ -23,6 +23,8 @@ in
     "${modulesPath}/image/repart.nix"
   ];
 
+  hardware.enableRedistributableFirmware = true;
+
   systemd.repart.enable = true;
   systemd.repart.partitions."01-root".Type = "root";
 
@@ -45,6 +47,7 @@ in
       patches = old.patches or [] ++ [ ./0001-repart-Support-named-GPT-flags-in-libfdisk.patch ];
     });
     name = "image";
+    compression.enable = true;
     partitions = {
       "01-esp" = {
         contents = {
