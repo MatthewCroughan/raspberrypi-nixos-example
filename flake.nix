@@ -9,9 +9,9 @@
     in {
       pi4 = self.nixosConfigurations.pi4.config.system.build.image;
       pi3 = self.nixosConfigurations.pi3.config.system.build.image.overrideAttrs {
-        postFixup = ''
-          ${pkgs.gptfdisk}/bin/sgdisk --hybrid 1:EE $out/image.raw
-          echo -e "M\nt\n1\n0b\nw\nr\nw\n" | ${pkgs.util-linux}/bin/fdisk $out/image.raw
+        preInstall = ''
+          ${pkgs.gptfdisk}/bin/sgdisk --hybrid 1:EE ${self.nixosConfigurations.pi3.config.image.repart.imageFileBasename}.raw
+          echo -e "M\nt\n1\n0b\nw\nr\nw\n" | ${pkgs.util-linux}/bin/fdisk ${self.nixosConfigurations.pi3.config.image.repart.imageFileBasename}.raw
         '';
       };
 
