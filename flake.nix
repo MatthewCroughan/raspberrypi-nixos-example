@@ -22,8 +22,8 @@
         '';
       };
     };
-    packages.x86_64-linux.pi-image = images.pi4;
-    packages.aarch64-linux.pi-image = images.pi4;
+    packages.x86_64-linux.pi4-image = images.pi4;
+    packages.aarch64-linux.pi4-image = images.pi4;
     packages.x86_64-linux.pi3-image = images.pi3;
     packages.aarch64-linux.pi3-image = images.pi3;
     packages.x86_64-linux.pi0-image = images.pi0;
