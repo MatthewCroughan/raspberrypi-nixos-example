@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 {
   boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
   environment.systemPackages = with pkgs; [ vim git ];
@@ -25,4 +25,5 @@
     experimental-features = lib.mkDefault "nix-command flakes";
     trusted-users = [ "root" "@wheel" ];
   };
+  boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
 }
