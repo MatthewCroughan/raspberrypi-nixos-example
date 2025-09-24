@@ -43,6 +43,7 @@ in
 
   image.repart = {
     name = "image";
+    compression.enable = true;
     partitions = {
       "01-esp" = {
         contents = {

@@ -1,10 +1,9 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs2411.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/master";
     nixos-hardware.url = "github:nixos/nixos-hardware";
   };
-  outputs = { self, nixpkgs, nixpkgs2411, nixos-hardware }@inputs: rec {
+  outputs = { self, nixpkgs, nixos-hardware }@inputs: rec {
     images = let
       pkgs = nixpkgs.legacyPackages.aarch64-linux;
     in {
