@@ -8,7 +8,6 @@
     enable = true;
     alsa = {
       enable = true;
-      support32Bit = true;
     };
     jack.enable = true;
     pulse.enable = true;
@@ -33,17 +32,37 @@
     algorithm = "zstd";
     memoryPercent = 90;
   };
-  boot.kernelParams = [ "cma=256M" "transparent_hugepage=always" ];
+  boot.kernelParams = [ "cma=256M" "transparent_hugepage=always" "mitigations=off" ];
   boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
   environment.systemPackages = with pkgs; [
     vim
+    waypipe
     librewolf
+    pavucontrol
+    pwvucontrol
+    coppwr
     git
     wsjtx
     jtdx
     direwolf
+    alsa-utils
     fldigi
-    js8call
+    (js8call.overrideAttrs (old: {
+       buildInputs = old.buildInputs ++ [ pkgs.pipewire pkgs.alsa-lib ];
+       runtimeDependencies = [
+         alsa-lib
+         fftw
+         pipewire
+       ];
+      # Needed for libraries that get dlopen'd
+       env.NIX_LDFLAGS = toString [
+         "-lpipewire-0.3"
+         "-lasound"
+         "-lfftw3"
+         "-lfftw3_threads"
+       ];
+
+    }))
   ];
   services.openssh.enable = true;
   networking.hostName = "pi";
