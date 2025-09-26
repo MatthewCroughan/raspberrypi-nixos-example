@@ -31,7 +31,7 @@ in
 
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.root = "gpt-auto";
-  boot.initrd.supportedFilesystems.ext4 = true;
+  boot.initrd.supportedFilesystems.btrfs = true;
 
   boot.loader = {
     generic-extlinux-compatible.enable = lib.mkForce false;
@@ -43,6 +43,7 @@ in
 
   image.repart = {
     name = "image";
+    compression.enable = true;
     partitions = {
       "01-esp" = {
         contents = {
@@ -64,9 +65,10 @@ in
         storePaths = [ config.system.build.toplevel ];
         repartConfig = {
           Type = "root";
-          Format = "ext4";
+          Format = "btrfs";
           Label = "nixos";
           Minimize = "guess";
+          Compression = "zstd";
           GrowFileSystem = true;
         };
       };
