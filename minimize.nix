@@ -7,7 +7,7 @@
   programs.less.lessopen = null;
   programs.command-not-found.enable = false;
   boot.enableContainers = false;
-  system.disableInstallerTools = true;
-  system.etc.overlay.enable = true;
+  system.disableInstallerTools = false;
+  system.etc.overlay.enable = false;
 #  systemd.sysusers.enable = true;
 }
