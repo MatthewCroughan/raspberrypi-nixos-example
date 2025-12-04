@@ -66,7 +66,7 @@ in
       patches = old.patches or [] ++ [ ./0001-repart-Support-named-GPT-flags-in-libfdisk.patch ];
     });
     name = "image";
-    compression.enable = true;
+    compression.enable = false;
     partitions = {
       "01-esp" = {
         contents = {
